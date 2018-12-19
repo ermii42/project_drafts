@@ -17,7 +17,7 @@ class checkers(QWidget):
 
         
     def initUI(self):
-        self.setGeometry(400, 100, 875, 870)
+        self.setGeometry(400, 100, 880, 880)
         self.setWindowTitle('шашки на поле более-менее логичны (уже не ходят как попало)')
         self.new_game()
         
