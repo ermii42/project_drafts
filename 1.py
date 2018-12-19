@@ -353,7 +353,7 @@ class simple_board():
                     (115, 445), (5, 335)]
     UltraWayG1H2 = [(665, 775), (775, 665)]#g1, h2
     UltraWayE1H4 = [(445, 775), (555, 665), (665, 555), (775, 445)]#e1, f2, g3, h4
-    UltraWayA7B8 = [(665, 775), (115, 5)]#a7, b8
+    UltraWayA7B8 = [(5, 115), (115, 5)]#a7, b8
     
     #список со всеми путями
     s = [GoldWay, DoubleWayG1A7, DoubleWayH2B8, TripleWayC1A3, TripleWayC1H6, 
