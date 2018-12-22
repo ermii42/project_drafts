@@ -17,7 +17,7 @@ class checkers(QWidget):
  
     def initUI(self):
         self.setGeometry(400, 100, 880, 880)
-        self.setWindowTitle('шашки на поле более-менее логичны (уже не ходят как попало)')
+        self.setWindowTitle('шашки')
         self.new_game()
           
     def new_game(self):
@@ -144,22 +144,22 @@ class checkers(QWidget):
                 if ways[1]: 
                     # ways[1] показывает, ест ли шашка
                     
-                    for i in ways[0]: 
+                    for way in ways[0]: 
                         # ways[0][n][0] показывает координаты, куда шашка может встать
                         # ways[0][n][1] показывает координаты съеденной шашки, если мы
                         # сходили на ways[0][n][0]
                         # узнаем, на какую же именно черную клетку из дозволенных она встала
                         if self.black_shapes[self.figure_black][1][0] in \
-                           range(i[0][0] - 5, i[0][0] - 5 + 111) and \
+                           range(way[0][0] - 5, way[0][0] - 5 + 111) and \
                            self.black_shapes[self.figure_black][1][1] in \
-                           range(i[0][1] - 5, i[0][1] - 5 + 111):
+                           range(way[0][1] - 5, way[0][1] - 5 + 111):
                             
-                            self.black_shapes[self.figure_black][0].move(i[0][0], i[0][1])
-                            self.black_shapes[self.figure_black][1] = i[0]
+                            self.black_shapes[self.figure_black][0].move(way[0][0], way[0][1])
+                            self.black_shapes[self.figure_black][1] = way[0]
                             
                             # если шашка дошла до противоположного края доски, она
                             # становится дамкой
-                            if i[0] in [(5, 775), (225, 775), (445, 775), (665, 775)]:
+                            if way[0] in [(5, 775), (225, 775), (445, 775), (665, 775)]:
                                 self.black_shapes[self.figure_black][2] = True
                                 self.black_shapes[self.figure_black][0].setPixmap(
                                     QPixmap('shape_black_q.png'))                            
@@ -167,14 +167,14 @@ class checkers(QWidget):
                             # теперь можно ходить белым
                             self.who_walks = 'w'
                             # изменяем списочное представление доски
-                            self.brd.changing_board(self.start_coor_b, i[0], 'b')
+                            self.brd.changing_board(self.start_coor_b, way[0], 'b')
                             # удалаяем со списочного представления доски съеденную 
                             # нами шашку
-                            self.brd.eating(i[1])
+                            self.brd.eating(way[1])
                             
                             # ищем съеденную шашку в списке белых шашек
                             for j in self.white_shapes:
-                                if j[1] == i[1]:
+                                if j[1] == way[1]:
                                     # убираем картинку шашки с доски
                                     self.white_shapes[self.white_shapes.index(j)
                                                       ][0].clear()
@@ -193,25 +193,25 @@ class checkers(QWidget):
                         
                 else:
                     # если шашка не ест, то:
-                    for i in ways[0]:
+                    for way in ways[0]:
                         
                         # в принципе, дальше все почти то же самое
                         # исключая съедение шашки
                         if self.black_shapes[self.figure_black][1][0] in range(
-                                i[0] - 5, i[0] - 5 + 111) and \
+                                way[0] - 5, way[0] - 5 + 111) and \
                                 self.black_shapes[self.figure_black][1][1] in range(
-                                i[1] - 5, i[1] - 5 + 111):
+                                way[1] - 5, way[1] - 5 + 111):
 
-                            self.black_shapes[self.figure_black][0].move(i[0], i[1])
-                            self.black_shapes[self.figure_black][1] = i
+                            self.black_shapes[self.figure_black][0].move(way[0], way[1])
+                            self.black_shapes[self.figure_black][1] = way
                             
-                            if i in [(5, 775), (225, 775), (445, 775), (665, 775)]:
+                            if way in [(5, 775), (225, 775), (445, 775), (665, 775)]:
                                 self.black_shapes[self.figure_black][2] = True
                                 self.black_shapes[self.figure_black][0].setPixmap(
                                     QPixmap('shape_black_q.png'))
                         
                             self.who_walks = 'w'
-                            self.brd.changing_board(self.start_coor_b, i, 'b')
+                            self.brd.changing_board(self.start_coor_b, way, 'b')
                             break
                     
                     else:
@@ -226,27 +226,27 @@ class checkers(QWidget):
                 
                 if ways[1]: 
                     
-                    for i in ways[0]:
+                    for way in ways[0]:
                         
                         if self.white_shapes[self.figure_white][1][0] in range(
-                            i[0][0] - 5, i[0][0] - 5 + 111)\
+                            way[0][0] - 5, way[0][0] - 5 + 111)\
                            and self.white_shapes[self.figure_white][1][1] in range(
-                               i[0][1] - 5, i[0][1] - 5 + 111):
+                               way[0][1] - 5, way[0][1] - 5 + 111):
                 
-                            self.white_shapes[self.figure_white][0].move(i[0][0], i[0][1])
-                            self.white_shapes[self.figure_white][1] = i[0]
+                            self.white_shapes[self.figure_white][0].move(way[0][0], way[0][1])
+                            self.white_shapes[self.figure_white][1] = way[0]
                             
-                            if i[0] in [(115, 5), (335, 5), (555, 5), (775, 5)]:
+                            if way[0] in [(115, 5), (335, 5), (555, 5), (775, 5)]:
                                 self.white_shapes[self.figure_white][2] = True
                                 self.white_shapes[self.figure_white][0].setPixmap(
                                     QPixmap('shape_white_q.png'))                            
                             
                             self.who_walks = 'b'
-                            self.brd.changing_board(self.start_coor_w, i[0], 'w')
-                            self.brd.eating(i[1])
+                            self.brd.changing_board(self.start_coor_w, way[0], 'w')
+                            self.brd.eating(way[1])
                             
                             for j in self.black_shapes:
-                                if j[1] == i[1]:
+                                if j[1] == way[1]:
                                     self.black_shapes[
                                         self.black_shapes.index(j)][0].clear()
                                     del self.black_shapes[self.black_shapes.index(j)]
@@ -259,22 +259,22 @@ class checkers(QWidget):
                         self.white_shapes[self.figure_white][1] = self.start_coor_w
                         
                 else:
-                    for i in ways[0]:
+                    for way in ways[0]:
                         
                         if self.white_shapes[self.figure_white][1][0] in \
-                           range(i[0] - 5, i[0] - 5 + 111) and self.white_shapes[
-                               self.figure_white][1][1] in range(i[1] - 5, i[1] - 5 + 111):
+                           range(way[0] - 5, way[0] - 5 + 111) and self.white_shapes[
+                               self.figure_white][1][1] in range(way[1] - 5, way[1] - 5 + 111):
                             
-                            self.white_shapes[self.figure_white][0].move(i[0], i[1])
-                            self.white_shapes[self.figure_white][1] = i
+                            self.white_shapes[self.figure_white][0].move(way[0], way[1])
+                            self.white_shapes[self.figure_white][1] = way
                             
-                            if i in [(115, 5), (335, 5), (555, 5), (775, 5)]:
+                            if way in [(115, 5), (335, 5), (555, 5), (775, 5)]:
                                 self.white_shapes[self.figure_white][2] = True
                                 self.white_shapes[self.figure_white][0].setPixmap(
                                     QPixmap('shape_white_q.png'))                            
                         
                             self.who_walks = 'b'
-                            self.brd.changing_board(self.start_coor_w, i, 'w')
+                            self.brd.changing_board(self.start_coor_w, way, 'w')
                             break
                     
                     else:
@@ -356,8 +356,8 @@ class simple_board():
     
     # список со всеми путями
     diagonals = [GoldWay, DoubleWayG1A7, DoubleWayH2B8, TripleWayC1A3, TripleWayC1H6, 
-         TripleWayH6F8, TripleWayA3F8, UltraWayA5D8, UltraWayE1A5, UltraWayE1H4, 
-         UltraWayA7B8, UltraWayH4D8, UltraWayG1H2]
+                 TripleWayH6F8, TripleWayA3F8, UltraWayA5D8, UltraWayE1A5, UltraWayE1H4, 
+                 UltraWayA7B8, UltraWayH4D8, UltraWayG1H2]
 
     def __init__(self):
         self.new_board()
@@ -405,32 +405,32 @@ class simple_board():
         # это хождение дамок (оно недоработано)
         # дамка не способна съесть больше одной шашки
         if is_q:
-            for i in self.diagonals:  # пробегаемся по диагоналям шахматной доски
+            for diagonal in self.diagonals:  # пробегаемся по диагоналям шахматной доски
                 
-                if coor in i:
+                if coor in diagonal:
                     # если шашка лежит на этой диагонали;
-                    for j in range(i.index(coor), - 1, -1):
+                    for j in range(diagonal.index(coor), - 1, -1):
                         if j - 2 >= 0:
                             
-                            if self.brd[i[j]] is None and self.brd[i[j - 1]] \
-                               != color and self.brd[i[j - 1]] is not None and \
-                               self.brd[i[j - 2]] is None or i[j] == coor and \
-                               self.brd[i[j - 1]] != color and \
-                               self.brd[i[j - 1]] is not None and self.brd[i[j - 2]] is None:
+                            if self.brd[diagonal[j]] is None and self.brd[diagonal[j - 1]] \
+                               != color and self.brd[diagonal[j - 1]] is not None and \
+                               self.brd[diagonal[j - 2]] is None or diagonal[j] == coor and \
+                               self.brd[diagonal[j - 1]] != color and self.brd[diagonal[j - 1]] \
+                               is not None and self.brd[diagonal[j - 2]] is None:
                                 
-                                ways.append((i[j - 2], i[j - 1]))                            
+                                ways.append((diagonal[j - 2], diagonal[j - 1]))                            
                                 break
                             
-                    for j in range(i.index(coor), len(i)):
-                        if j + 2 < len(i):
+                    for j in range(diagonal.index(coor), len(diagonal)):
+                        if j + 2 < len(diagonal):
                             
-                            if self.brd[i[j]] is None and self.brd[i[j + 1]] \
-                               != color and self.brd[i[j + 1]] is not None and \
-                               self.brd[i[j + 2]] is None or i[j] == coor and \
-                               self.brd[i[j + 1]] != color and \
-                               self.brd[i[j + 1]] is not None and self.brd[i[j + 2]] is None:
+                            if self.brd[diagonal[j]] is None and self.brd[diagonal[j + 1]] \
+                               != color and self.brd[diagonal[j + 1]] is not None and \
+                               self.brd[diagonal[j + 2]] is None or diagonal[j] == coor and \
+                               self.brd[diagonal[j + 1]] != color and self.brd[diagonal[j + 1]] \
+                               is not None and self.brd[diagonal[j + 2]] is None:
                                 
-                                ways.append((i[j + 2], i[j + 1])) 
+                                ways.append((diagonal[j + 2], diagonal[j + 1])) 
                                 break
                             
             if ways != []:  # если у дамки была возможность кого-то съесть,
@@ -438,16 +438,16 @@ class simple_board():
                 return (ways, True)
             
             # если же нет, то дамка может ходить куда пожелает (кроме как через/на другие шашки)
-            for i in self.diagonals:
-                if coor in i:
-                    for j in range(i.index(coor) - 1, -1, -1):
+            for diagonal in self.diagonals:
+                if coor in diagonal:
+                    for j in range(diagonal.index(coor) - 1, -1, -1):
                         
-                        if self.brd[i[j]] is None:
-                            ways.append(i[j]) 
+                        if self.brd[diagonal[j]] is None:
+                            ways.append(diagonal[j]) 
                         else:
                             break
                         
-                    for j in i[i.index(coor) + 1:]:
+                    for j in diagonal[diagonal.index(coor) + 1:]:
                         
                         if self.brd[j] is None:
                             ways.append(j)
@@ -458,39 +458,39 @@ class simple_board():
            
         # а это просчет ходов для простой шашки
         # тут тоже возможность бить недоработана, они тоже не могут съесть больше одной шашки
-        for i in self.diagonals:
+        for diagonal in self.diagonals:
             
-                if coor in i:
-                    if i.index(coor) + 2 < len(i):
-                        if self.brd[i[i.index(coor) + 2]] is None and \
-                           self.brd[i[i.index(coor) + 1]] != color and \
-                           self.brd[i[i.index(coor) + 1]] in ['w', 'b']:
-                            ways.append((i[i.index(coor) + 2], i[i.index(coor) + 1]))
+                if coor in diagonal:
+                    if diagonal.index(coor) + 2 < len(diagonal):
+                        if self.brd[diagonal[diagonal.index(coor) + 2]] is None and \
+                           self.brd[diagonal[diagonal.index(coor) + 1]] != color and \
+                           self.brd[diagonal[diagonal.index(coor) + 1]] in ['w', 'b']:
+                            ways.append((diagonal[diagonal.index(coor) + 2],
+                                         diagonal[diagonal.index(coor) + 1]))
                             
-                    if i.index(coor) - 2 >= 0:
-                        if self.brd[i[i.index(coor) - 2]] is None and self.brd[i[
-                            i.index(coor) - 1]] != color and self.brd[i[i.index(coor) - 1
-                                                                        ]] in ['w', 'b']:
-                            ways.append((i[i.index(coor) - 2], i[i.index(coor) - 1]))
+                    if diagonal.index(coor) - 2 >= 0:
+                        if self.brd[diagonal[diagonal.index(coor) - 2]] is None and \
+                           self.brd[diagonal[diagonal.index(coor) - 1]] != color and \
+                           self.brd[diagonal[diagonal.index(coor) - 1]] in ['w', 'b']:
+                            ways.append((diagonal[diagonal.index(coor) - 2],
+                                         diagonal[diagonal.index(coor) - 1]))
                             
         if ways != []:
             return (ways, True)
         
         if color == 'w':
-            for i in self.diagonals:
-                
-                if coor in i:
-                    if i.index(coor) + 1 < len(i):
-                        if self.brd[i[i.index(coor) + 1]] is None:
-                            ways.append(i[i.index(coor) + 1])                
+            for diagonal in self.diagonals: 
+                if coor in diagonal:
+                    if diagonal.index(coor) + 1 < len(diagonal):
+                        if self.brd[diagonal[diagonal.index(coor) + 1]] is None:
+                            ways.append(diagonal[diagonal.index(coor) + 1])                
                 
         else:
-            
-            for i in self.diagonals:
-                if coor in i:
-                    if i.index(coor) - 1 >= 0:
-                        if self.brd[i[i.index(coor) - 1]] is None:
-                            ways.append(i[i.index(coor) - 1])
+            for diagonal in self.diagonals:
+                if coor in diagonal:
+                    if diagonal.index(coor) - 1 >= 0:
+                        if self.brd[diagonal[diagonal.index(coor) - 1]] is None:
+                            ways.append(diagonal[diagonal.index(coor) - 1])
                             
         return (ways, False)
     
